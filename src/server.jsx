@@ -10,8 +10,9 @@ import http from 'http';
 http
   .createServer(async (req, res) => {
     const template = await readFile('./index.html', 'utf-8');
+    const data = await App.getServerSideProps(); // делаем запрос на сервер и потом прописываем это в статику
     // const html = renderToString(<App />);
-    const html = renderToStaticMarkup(<App />);
+    const html = renderToStaticMarkup(<App data={data} />);
 
     res.writeHead(200, {
       'content-type': 'text/html',

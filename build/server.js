@@ -19957,10 +19957,10 @@ var require_dist = __commonJS({
     }
     function compile(path, options = {}) {
       const { encode = encodeURIComponent, delimiter = DEFAULT_DELIMITER } = options;
-      const data = path instanceof TokenData ? path : parse(path, options);
-      const fn = tokensToFunction(data.tokens, delimiter, encode);
-      return function path2(data2 = {}) {
-        const [path3, ...missing] = fn(data2);
+      const data2 = path instanceof TokenData ? path : parse(path, options);
+      const fn = tokensToFunction(data2.tokens, delimiter, encode);
+      return function path2(data3 = {}) {
+        const [path3, ...missing] = fn(data3);
         if (missing.length) {
           throw new TypeError(`Missing parameters: ${missing.join(", ")}`);
         }
@@ -19969,10 +19969,10 @@ var require_dist = __commonJS({
     }
     function tokensToFunction(tokens, delimiter, encode) {
       const encoders = tokens.map((token) => tokenToFunction(token, delimiter, encode));
-      return (data) => {
+      return (data2) => {
         const result = [""];
         for (const encoder of encoders) {
-          const [value, ...extras] = encoder(data);
+          const [value, ...extras] = encoder(data2);
           result[0] += value;
           result.push(...extras);
         }
@@ -19984,8 +19984,8 @@ var require_dist = __commonJS({
         return () => [token.value];
       if (token.type === "group") {
         const fn = tokensToFunction(token.tokens, delimiter, encode);
-        return (data) => {
-          const [value, ...missing] = fn(data);
+        return (data2) => {
+          const [value, ...missing] = fn(data2);
           if (!missing.length)
             return [value];
           return [""];
@@ -19993,8 +19993,8 @@ var require_dist = __commonJS({
       }
       const encodeValue = encode || NOOP_VALUE;
       if (token.type === "wildcard" && encode !== false) {
-        return (data) => {
-          const value = data[token.name];
+        return (data2) => {
+          const value = data2[token.name];
           if (value == null)
             return ["", token.name];
           if (!Array.isArray(value) || value.length === 0) {
@@ -20010,8 +20010,8 @@ var require_dist = __commonJS({
           ];
         };
       }
-      return (data) => {
-        const value = data[token.name];
+      return (data2) => {
+        const value = data2[token.name];
         if (value == null)
           return ["", token.name];
         if (typeof value !== "string") {
@@ -20121,8 +20121,8 @@ var require_dist = __commonJS({
       }
       return `(?:(?!${escape2(backtrack)}|${escape2(delimiter)})[\\s\\S])`;
     }
-    function stringify(data) {
-      return data.tokens.map(function stringifyToken(token, index, tokens) {
+    function stringify(data2) {
+      return data2.tokens.map(function stringifyToken(token, index, tokens) {
         if (token.type === "text")
           return escapeText(token.value);
         if (token.type === "group") {
@@ -27907,9 +27907,9 @@ var require_react_dom_server_legacy_node_production = __commonJS({
         return sharedNotPendingObject;
       },
       useMemoCache: function(size) {
-        for (var data = Array(size), i = 0; i < size; i++)
-          data[i] = REACT_MEMO_CACHE_SENTINEL;
-        return data;
+        for (var data2 = Array(size), i = 0; i < size; i++)
+          data2[i] = REACT_MEMO_CACHE_SENTINEL;
+        return data2;
       },
       useCacheRefresh: function() {
         return unsupportedRefresh;
@@ -32640,9 +32640,9 @@ var require_react_dom_server_node_production = __commonJS({
         return sharedNotPendingObject;
       },
       useMemoCache: function(size) {
-        for (var data = Array(size), i = 0; i < size; i++)
-          data[i] = REACT_MEMO_CACHE_SENTINEL;
-        return data;
+        for (var data2 = Array(size), i = 0; i < size; i++)
+          data2[i] = REACT_MEMO_CACHE_SENTINEL;
+        return data2;
       },
       useCacheRefresh: function() {
         return unsupportedRefresh;
@@ -41188,9 +41188,9 @@ var require_react_dom_server_legacy_node_development = __commonJS({
           return NotPending;
         },
         useMemoCache: function(size) {
-          for (var data = Array(size), i = 0; i < size; i++)
-            data[i] = REACT_MEMO_CACHE_SENTINEL;
-          return data;
+          for (var data2 = Array(size), i = 0; i < size; i++)
+            data2[i] = REACT_MEMO_CACHE_SENTINEL;
+          return data2;
         },
         useCacheRefresh: function() {
           return unsupportedRefresh;
@@ -47916,9 +47916,9 @@ var require_react_dom_server_node_development = __commonJS({
           return NotPending;
         },
         useMemoCache: function(size) {
-          for (var data = Array(size), i = 0; i < size; i++)
-            data[i] = REACT_MEMO_CACHE_SENTINEL;
-          return data;
+          for (var data2 = Array(size), i = 0; i < size; i++)
+            data2[i] = REACT_MEMO_CACHE_SENTINEL;
+          return data2;
         },
         useCacheRefresh: function() {
           return unsupportedRefresh;
@@ -48383,27 +48383,31 @@ var import_promises = require("fs/promises");
 var import_server = __toESM(require_server_node());
 
 // src/App.tsx
-var import_react = __toESM(require_react());
 var import_jsx_runtime = __toESM(require_jsx_runtime());
-function App() {
-  const data = [
-    { name: "Javascript", skills: 90 },
-    { name: "TypeScript", skills: 60 },
-    { name: "React", skills: 99 }
-  ];
-  const [count, setCount] = (0, import_react.useState)(0);
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { children: data.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", { children: [
+function App({ data: data2 }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { children: data2.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", { children: [
     /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: item.name }),
     /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: item.skills })
   ] }, index)) });
 }
+var data = [
+  { name: "Javascript", skills: 90 },
+  { name: "TypeScript", skills: 60 },
+  { name: "React", skills: 99 }
+];
+App.getServerSideProps = () => new Promise((resolve) => {
+  setTimeout(() => {
+    resolve(data);
+  }, 1e3);
+});
 
 // src/server.jsx
 var import_http = __toESM(require("http"));
 var import_jsx_runtime2 = __toESM(require_jsx_runtime());
 import_http.default.createServer(async (req, res) => {
   const template = await (0, import_promises.readFile)("./index.html", "utf-8");
-  const html = (0, import_server.renderToStaticMarkup)(/* @__PURE__ */ (0, import_jsx_runtime2.jsx)(App, {}));
+  const data2 = await App.getServerSideProps();
+  const html = (0, import_server.renderToStaticMarkup)(/* @__PURE__ */ (0, import_jsx_runtime2.jsx)(App, { data: data2 }));
   res.writeHead(200, {
     "content-type": "text/html"
   });

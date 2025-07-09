@@ -1,13 +1,6 @@
 import { useState } from 'react';
 
-export default function App() {
-  const data = [
-    { name: 'Javascript', skills: 90 },
-    { name: 'TypeScript', skills: 60 },
-    { name: 'React', skills: 99 },
-  ];
-  const [count, setCount] = useState(0);
-
+export default function App({ data }) {
   return (
     <ul>
       {data.map((item, index) => (
@@ -19,3 +12,17 @@ export default function App() {
     </ul>
   );
 }
+
+const data = [
+  { name: 'Javascript', skills: 90 },
+  { name: 'TypeScript', skills: 60 },
+  { name: 'React', skills: 99 },
+];
+
+// имитируем запрос на сервер
+App.getServerSideProps = () =>
+  new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(data);
+    }, 1000);
+  });

@@ -1255,23 +1255,26 @@
   });
 
   // src/App.tsx
-  function App() {
-    const data = [
-      { name: "Javascript", skills: 90 },
-      { name: "TypeScript", skills: 60 },
-      { name: "React", skills: 99 }
-    ];
-    const [count, setCount] = (0, import_react.useState)(0);
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { children: data.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", { children: [
+  function App({ data: data2 }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { children: data2.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", { children: [
       /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: item.name }),
       /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: item.skills })
     ] }, index)) });
   }
-  var import_react, import_jsx_runtime;
+  var import_jsx_runtime, data;
   var init_App = __esm({
     "src/App.tsx"() {
-      import_react = __toESM(require_react());
       import_jsx_runtime = __toESM(require_jsx_runtime());
+      data = [
+        { name: "Javascript", skills: 90 },
+        { name: "TypeScript", skills: 60 },
+        { name: "React", skills: 99 }
+      ];
+      App.getServerSideProps = () => new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(data);
+        }, 1e3);
+      });
     }
   });
 
@@ -15661,13 +15664,13 @@
           suspenseInstance = suspenseInstance.nextSibling;
           for (var depth = 0; suspenseInstance; ) {
             if (8 === suspenseInstance.nodeType) {
-              var data = suspenseInstance.data;
-              if (data === SUSPENSE_END_DATA) {
+              var data2 = suspenseInstance.data;
+              if (data2 === SUSPENSE_END_DATA) {
                 if (0 === depth)
                   return getNextHydratable(suspenseInstance.nextSibling);
                 depth--;
               } else
-                data !== SUSPENSE_START_DATA && data !== SUSPENSE_FALLBACK_START_DATA && data !== SUSPENSE_PENDING_START_DATA || depth++;
+                data2 !== SUSPENSE_START_DATA && data2 !== SUSPENSE_FALLBACK_START_DATA && data2 !== SUSPENSE_PENDING_START_DATA || depth++;
             }
             suspenseInstance = suspenseInstance.nextSibling;
           }
@@ -15677,11 +15680,11 @@
           targetInstance = targetInstance.previousSibling;
           for (var depth = 0; targetInstance; ) {
             if (8 === targetInstance.nodeType) {
-              var data = targetInstance.data;
-              if (data === SUSPENSE_START_DATA || data === SUSPENSE_FALLBACK_START_DATA || data === SUSPENSE_PENDING_START_DATA) {
+              var data2 = targetInstance.data;
+              if (data2 === SUSPENSE_START_DATA || data2 === SUSPENSE_FALLBACK_START_DATA || data2 === SUSPENSE_PENDING_START_DATA) {
                 if (0 === depth) return targetInstance;
                 depth--;
-              } else data === SUSPENSE_END_DATA && depth++;
+              } else data2 === SUSPENSE_END_DATA && depth++;
             }
             targetInstance = targetInstance.previousSibling;
           }
