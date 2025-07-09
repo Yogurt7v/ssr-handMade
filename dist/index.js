@@ -1256,14 +1256,16 @@
 
   // src/App.tsx
   function App() {
+    const data = [
+      { name: "Javascript", skills: 90 },
+      { name: "TypeScript", skills: 60 },
+      { name: "React", skills: 99 }
+    ];
     const [count, setCount] = (0, import_react.useState)(0);
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { children: [
-        "Count ",
-        count
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { onClick: () => setCount((p) => p + 1), children: "Add count" })
-    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { children: data.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: item.name }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: item.skills })
+    ] }, index)) });
   }
   var import_react, import_jsx_runtime;
   var init_App = __esm({

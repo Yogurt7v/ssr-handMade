@@ -20826,7 +20826,7 @@ var require_application = __commonJS({
     var finalhandler = require_finalhandler();
     var debug = require_src()("express:application");
     var View = require_view();
-    var http = require("node:http");
+    var http2 = require("node:http");
     var methods = require_utils3().methods;
     var compileETag = require_utils3().compileETag;
     var compileQueryParser = require_utils3().compileQueryParser;
@@ -20836,9 +20836,9 @@ var require_application = __commonJS({
     var Router = require_router();
     var slice = Array.prototype.slice;
     var flatten = Array.prototype.flat;
-    var app2 = exports2 = module2.exports = {};
+    var app = exports2 = module2.exports = {};
     var trustProxyDefaultSymbol = "@@symbol:trust_proxy_default";
-    app2.init = function init() {
+    app.init = function init() {
       var router = null;
       this.cache = /* @__PURE__ */ Object.create(null);
       this.engines = /* @__PURE__ */ Object.create(null);
@@ -20858,7 +20858,7 @@ var require_application = __commonJS({
         }
       });
     };
-    app2.defaultConfiguration = function defaultConfiguration() {
+    app.defaultConfiguration = function defaultConfiguration() {
       var env = process.env.NODE_ENV || "development";
       this.enable("x-powered-by");
       this.set("etag", "weak");
@@ -20891,7 +20891,7 @@ var require_application = __commonJS({
         this.enable("view cache");
       }
     };
-    app2.handle = function handle(req, res, callback) {
+    app.handle = function handle(req, res, callback) {
       var done = callback || finalhandler(req, res, {
         env: this.get("env"),
         onerror: logerror.bind(this)
@@ -20908,7 +20908,7 @@ var require_application = __commonJS({
       }
       this.router.handle(req, res, done);
     };
-    app2.use = function use(fn) {
+    app.use = function use(fn) {
       var offset = 0;
       var path = "/";
       if (typeof fn !== "function") {
@@ -20945,10 +20945,10 @@ var require_application = __commonJS({
       }, this);
       return this;
     };
-    app2.route = function route(path) {
+    app.route = function route(path) {
       return this.router.route(path);
     };
-    app2.engine = function engine(ext, fn) {
+    app.engine = function engine(ext, fn) {
       if (typeof fn !== "function") {
         throw new Error("callback function required");
       }
@@ -20956,7 +20956,7 @@ var require_application = __commonJS({
       this.engines[extension] = fn;
       return this;
     };
-    app2.param = function param(name, fn) {
+    app.param = function param(name, fn) {
       if (Array.isArray(name)) {
         for (var i = 0; i < name.length; i++) {
           this.param(name[i], fn);
@@ -20966,7 +20966,7 @@ var require_application = __commonJS({
       this.router.param(name, fn);
       return this;
     };
-    app2.set = function set(setting, val) {
+    app.set = function set(setting, val) {
       if (arguments.length === 1) {
         return this.settings[setting];
       }
@@ -20989,23 +20989,23 @@ var require_application = __commonJS({
       }
       return this;
     };
-    app2.path = function path() {
+    app.path = function path() {
       return this.parent ? this.parent.path() + this.mountpath : "";
     };
-    app2.enabled = function enabled(setting) {
+    app.enabled = function enabled(setting) {
       return Boolean(this.set(setting));
     };
-    app2.disabled = function disabled(setting) {
+    app.disabled = function disabled(setting) {
       return !this.set(setting);
     };
-    app2.enable = function enable(setting) {
+    app.enable = function enable(setting) {
       return this.set(setting, true);
     };
-    app2.disable = function disable(setting) {
+    app.disable = function disable(setting) {
       return this.set(setting, false);
     };
     methods.forEach(function(method) {
-      app2[method] = function(path) {
+      app[method] = function(path) {
         if (method === "get" && arguments.length === 1) {
           return this.set(path);
         }
@@ -21014,7 +21014,7 @@ var require_application = __commonJS({
         return this;
       };
     });
-    app2.all = function all(path) {
+    app.all = function all(path) {
       var route = this.route(path);
       var args = slice.call(arguments, 1);
       for (var i = 0; i < methods.length; i++) {
@@ -21022,7 +21022,7 @@ var require_application = __commonJS({
       }
       return this;
     };
-    app2.render = function render(name, options, callback) {
+    app.render = function render(name, options, callback) {
       var cache = this.cache;
       var done = callback;
       var engines = this.engines;
@@ -21058,8 +21058,8 @@ var require_application = __commonJS({
       }
       tryRender(view, renderOptions, done);
     };
-    app2.listen = function listen() {
-      var server = http.createServer(this);
+    app.listen = function listen() {
+      var server = http2.createServer(this);
       var args = Array.prototype.slice.call(arguments);
       if (typeof args[args.length - 1] === "function") {
         var done = args[args.length - 1] = once(args[args.length - 1]);
@@ -21834,12 +21834,12 @@ var require_request = __commonJS({
     var accepts = require_accepts();
     var isIP = require("node:net").isIP;
     var typeis = require_type_is();
-    var http = require("node:http");
+    var http2 = require("node:http");
     var fresh = require_fresh();
     var parseRange = require_range_parser();
     var parse = require_parseurl();
     var proxyaddr = require_proxy_addr();
-    var req = Object.create(http.IncomingMessage.prototype);
+    var req = Object.create(http2.IncomingMessage.prototype);
     module2.exports = req;
     req.get = req.header = function header(name) {
       if (!name) {
@@ -22946,7 +22946,7 @@ var require_response = __commonJS({
     var createError = require_http_errors();
     var encodeUrl = require_encodeurl();
     var escapeHtml = require_escape_html();
-    var http = require("node:http");
+    var http2 = require("node:http");
     var onFinished = require_on_finished();
     var mime = require_mime_types();
     var path = require("node:path");
@@ -22961,7 +22961,7 @@ var require_response = __commonJS({
     var extname = path.extname;
     var resolve = path.resolve;
     var vary = require_vary();
-    var res = Object.create(http.ServerResponse.prototype);
+    var res = Object.create(http2.ServerResponse.prototype);
     module2.exports = res;
     res.status = function status(code) {
       if (!Number.isInteger(code)) {
@@ -22991,7 +22991,7 @@ var require_response = __commonJS({
       var encoding;
       var req = this.req;
       var type;
-      var app2 = this.app;
+      var app = this.app;
       switch (typeof chunk) {
         // string defaulting to html
         case "string":
@@ -23020,7 +23020,7 @@ var require_response = __commonJS({
           this.set("Content-Type", setCharset(type, "utf-8"));
         }
       }
-      var etagFn = app2.get("etag fn");
+      var etagFn = app.get("etag fn");
       var generateETag = !this.get("ETag") && typeof etagFn === "function";
       var len;
       if (chunk !== void 0) {
@@ -23061,10 +23061,10 @@ var require_response = __commonJS({
       return this;
     };
     res.json = function json(obj) {
-      var app2 = this.app;
-      var escape2 = app2.get("json escape");
-      var replacer = app2.get("json replacer");
-      var spaces = app2.get("json spaces");
+      var app = this.app;
+      var escape2 = app.get("json escape");
+      var replacer = app.get("json replacer");
+      var spaces = app.get("json spaces");
       var body = stringify(obj, replacer, spaces, escape2);
       if (!this.get("Content-Type")) {
         this.set("Content-Type", "application/json");
@@ -23072,12 +23072,12 @@ var require_response = __commonJS({
       return this.send(body);
     };
     res.jsonp = function jsonp(obj) {
-      var app2 = this.app;
-      var escape2 = app2.get("json escape");
-      var replacer = app2.get("json replacer");
-      var spaces = app2.get("json spaces");
+      var app = this.app;
+      var escape2 = app.get("json escape");
+      var replacer = app.get("json replacer");
+      var spaces = app.get("json spaces");
       var body = stringify(obj, replacer, spaces, escape2);
-      var callback = this.req.query[app2.get("jsonp callback name")];
+      var callback = this.req.query[app.get("jsonp callback name")];
       if (!this.get("Content-Type")) {
         this.set("X-Content-Type-Options", "nosniff");
         this.set("Content-Type", "application/json");
@@ -23294,7 +23294,7 @@ var require_response = __commonJS({
       return this;
     };
     res.render = function render(view, options, callback) {
-      var app2 = this.req.app;
+      var app = this.req.app;
       var done = callback;
       var opts = options || {};
       var req = this.req;
@@ -23308,7 +23308,7 @@ var require_response = __commonJS({
         if (err) return req.next(err);
         self.send(str);
       };
-      app2.render(view, opts, done);
+      app.render(view, opts, done);
     };
     function sendfile(res2, file, options, callback) {
       var done = false;
@@ -23514,19 +23514,19 @@ var require_express = __commonJS({
     var res = require_response();
     exports2 = module2.exports = createApplication;
     function createApplication() {
-      var app2 = function(req2, res2, next) {
-        app2.handle(req2, res2, next);
+      var app = function(req2, res2, next) {
+        app.handle(req2, res2, next);
       };
-      mixin(app2, EventEmitter.prototype, false);
-      mixin(app2, proto, false);
-      app2.request = Object.create(req, {
-        app: { configurable: true, enumerable: true, writable: true, value: app2 }
+      mixin(app, EventEmitter.prototype, false);
+      mixin(app, proto, false);
+      app.request = Object.create(req, {
+        app: { configurable: true, enumerable: true, writable: true, value: app }
       });
-      app2.response = Object.create(res, {
-        app: { configurable: true, enumerable: true, writable: true, value: app2 }
+      app.response = Object.create(res, {
+        app: { configurable: true, enumerable: true, writable: true, value: app }
       });
-      app2.init();
-      return app2;
+      app.init();
+      return app;
     }
     exports2.application = proto;
     exports2.request = req;
@@ -48386,29 +48386,30 @@ var import_server = __toESM(require_server_node());
 var import_react = __toESM(require_react());
 var import_jsx_runtime = __toESM(require_jsx_runtime());
 function App() {
+  const data = [
+    { name: "Javascript", skills: 90 },
+    { name: "TypeScript", skills: 60 },
+    { name: "React", skills: 99 }
+  ];
   const [count, setCount] = (0, import_react.useState)(0);
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { children: [
-      "Count ",
-      count
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { onClick: () => setCount((p) => p + 1), children: "Add count" })
-  ] });
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { children: data.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: item.name }),
+    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: item.skills })
+  ] }, index)) });
 }
 
 // src/server.jsx
+var import_http = __toESM(require("http"));
 var import_jsx_runtime2 = __toESM(require_jsx_runtime());
-var app = (0, import_express.default)();
-var port = 3001;
-app.get("/", async (req, res) => {
+import_http.default.createServer(async (req, res) => {
   const template = await (0, import_promises.readFile)("./index.html", "utf-8");
-  const html = (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime2.jsx)(App, {}));
-  res.send(template.replace("<div id='root'></div>", `<div id="root">${html}</div>`));
-});
-app.use(import_express.default.static("./dist"));
-app.listen(port, () => {
-  console.log(`\u0421\u0435\u0440\u0432\u0435\u0440 \u0441\u0442\u0430\u0440\u0442\u043E\u0432\u0430\u043B \u043D\u0430 \u043F\u043E\u0440\u0442\u0443 ${port}`);
-});
+  const html = (0, import_server.renderToStaticMarkup)(/* @__PURE__ */ (0, import_jsx_runtime2.jsx)(App, {}));
+  res.writeHead(200, {
+    "content-type": "text/html"
+  });
+  res.end(template.replace('<div id="root"></div>', `<div id="root">${html}</div>`));
+  console.log("server started");
+}).listen(3001);
 /*! Bundled license information:
 
 depd/index.js:

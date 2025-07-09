@@ -8,7 +8,7 @@ import http from 'http';
 // const app = express();
 
 http
-  .createServer('/', async (req, res) => {
+  .createServer(async (req, res) => {
     const template = await readFile('./index.html', 'utf-8');
     // const html = renderToString(<App />);
     const html = renderToStaticMarkup(<App />);
@@ -17,14 +17,11 @@ http
       'content-type': 'text/html',
     });
 
-    res.end(template.replace("<div id='root'></div>", `<div id="root">${html}</div>`));
+    res.end(template.replace('<div id="root"></div>', `<div id="root">${html}</div>`));
+    console.log('server started');
 
     // находим в индексе разметку и заменяем её на реакт компонент превращённый в строку
   })
   .listen(3001);
 
-app.use(express.static('./dist')); // раздача статики только для примера. лучше используй nginx
-
-app.listen(port, () => {
-  console.log(`Сервер стартовал на порту 3001`);
-});
+// app.use(express.static('./dist')); // раздача статики только для примера. лучше используй nginx
