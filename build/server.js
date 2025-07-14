@@ -48383,12 +48383,21 @@ var import_promises = require("fs/promises");
 var import_server = __toESM(require_server_node());
 
 // src/App.tsx
+var import_react = __toESM(require_react());
 var import_jsx_runtime = __toESM(require_jsx_runtime());
 function App({ data: data2 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { children: data2.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: item.name }),
-    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: item.skills })
-  ] }, index)) });
+  const [count, setCount] = (0, import_react.useState)(0);
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { children: [
+      "Count: ",
+      count
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { onClick: () => setCount((prev) => prev + 1), children: "Click" }),
+    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { children: data2.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: item.name }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: item.skills })
+    ] }, index)) })
+  ] });
 }
 var data = [
   { name: "Javascript", skills: 90 },
@@ -48405,13 +48414,28 @@ App.getServerSideProps = () => new Promise((resolve) => {
 var import_http = __toESM(require("http"));
 var import_jsx_runtime2 = __toESM(require_jsx_runtime());
 import_http.default.createServer(async (req, res) => {
+  if (req.url === "/index.js") {
+    const bundle = await (0, import_promises.readFile)("./dist/index.js");
+    res.writeHead(200, {
+      "content-type": "text/javascript"
+    });
+    res.end(bundle);
+    return;
+  }
   const template = await (0, import_promises.readFile)("./index.html", "utf-8");
   const data2 = await App.getServerSideProps();
   const html = (0, import_server.renderToStaticMarkup)(/* @__PURE__ */ (0, import_jsx_runtime2.jsx)(App, { data: data2 }));
   res.writeHead(200, {
     "content-type": "text/html"
   });
-  res.end(template.replace('<div id="root"></div>', `<div id="root">${html}</div>`));
+  res.end(
+    template.replace(
+      '<div id="root"></div>',
+      `<div id="root">${html}</div><script>window.data = ${JSON.stringify(
+        data2
+      )}</script>`
+    )
+  );
   console.log("server started");
 }).listen(3001);
 /*! Bundled license information:

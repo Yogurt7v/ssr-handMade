@@ -1256,14 +1256,23 @@
 
   // src/App.tsx
   function App({ data: data2 }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { children: data2.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: item.name }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: item.skills })
-    ] }, index)) });
+    const [count, setCount] = (0, import_react.useState)(0);
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { children: [
+        "Count: ",
+        count
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { onClick: () => setCount((prev) => prev + 1), children: "Click" }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { children: data2.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: item.name }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: item.skills })
+      ] }, index)) })
+    ] });
   }
-  var import_jsx_runtime, data;
+  var import_react, import_jsx_runtime, data;
   var init_App = __esm({
     "src/App.tsx"() {
+      import_react = __toESM(require_react());
       import_jsx_runtime = __toESM(require_jsx_runtime());
       data = [
         { name: "Javascript", skills: 90 },
@@ -19607,7 +19616,7 @@
       init_App();
       var import_client = __toESM(require_client());
       var import_jsx_runtime2 = __toESM(require_jsx_runtime());
-      (0, import_client.hydrateRoot)(document.getElementById("root"), /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(App, {}));
+      (0, import_client.hydrateRoot)(document.getElementById("root"), /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(App, { data: window.data }));
     }
   });
   require_client2();
