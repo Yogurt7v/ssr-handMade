@@ -1,7 +1,7 @@
 import express from 'express';
 import { readFile } from 'fs/promises';
 // import { renderToString } from 'react-dom/server'; // функция превращающая реакт компонент в строку
-import { renderToStaticMarkup } from 'react-dom/server';
+import { renderToStaticMarkup, renderToPipeableStream } from 'react-dom/server';
 import App from './App';
 import http from 'http';
 
@@ -19,24 +19,22 @@ http
       return;
     }
 
-    const template = await readFile('./index.html', 'utf-8');
-    const data = await App.getServerSideProps(); // делаем запрос на сервер и потом прописываем это в статику
-    // const html = renderToString(<App />);
-    const html = renderToStaticMarkup(<App data={data} />);
-
-    res.writeHead(200, {
-      'content-type': 'text/html',
+    const stream = renderToPipeableStream(<App />, {
+      bootstrapScripts: ['/index.js'],
+      onShellReady: () => {
+        stream.pipe(res);
+      },
     });
 
-    res.end(
-      template.replace(
-        '<div id="root"></div>',
-        `<div id="root">${html}</div><script>window.data = ${JSON.stringify(
-          data
-        )}</script>`
-      )
-    );
-    console.log('server started');
+    // const template = await readFile('./index.html', 'utf-8');
+    // const html = renderToString(<App />);
+
+    // res.writeHead(200, {
+    //   'content-type': 'text/html',
+    // });
+
+    // res.end(template.replace('<div id="root"></div>', `<div id="root">${html}</div>`));
+    // console.log('server started');
 
     // находим в индексе разметку и заменяем её на реакт компонент превращённый в строку
   })

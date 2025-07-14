@@ -1254,36 +1254,50 @@
     }
   });
 
+  // src/List.jsx
+  var import_react, import_jsx_runtime, List;
+  var init_List = __esm({
+    "src/List.jsx"() {
+      import_react = __toESM(require_react());
+      import_jsx_runtime = __toESM(require_jsx_runtime());
+      List = () => {
+        const data = (0, import_react.use)(
+          new Promise((resolve) => {
+            setTimeout(() => {
+              resolve([
+                { name: "Javascript", skills: 90 },
+                { name: "TypeScript", skills: 60 },
+                { name: "React", skills: 99 }
+              ]);
+            }, 2e3);
+          })
+        );
+        return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { children: data.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: item.name }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: item.skills })
+        ] }, index)) });
+      };
+    }
+  });
+
   // src/App.tsx
-  function App({ data: data2 }) {
-    const [count, setCount] = (0, import_react.useState)(0);
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { children: [
+  function App() {
+    const [count, setCount] = (0, import_react2.useState)(0);
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("p", { children: [
         "Count: ",
         count
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { onClick: () => setCount((prev) => prev + 1), children: "Click" }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { children: data2.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: item.name }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: item.skills })
-      ] }, index)) })
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { onClick: () => setCount((prev) => prev + 1), children: "Click" }),
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_react2.Suspense, { fallback: "Loading", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(List, {}) })
     ] });
   }
-  var import_react, import_jsx_runtime, data;
+  var import_react2, import_jsx_runtime2;
   var init_App = __esm({
     "src/App.tsx"() {
-      import_react = __toESM(require_react());
-      import_jsx_runtime = __toESM(require_jsx_runtime());
-      data = [
-        { name: "Javascript", skills: 90 },
-        { name: "TypeScript", skills: 60 },
-        { name: "React", skills: 99 }
-      ];
-      App.getServerSideProps = () => new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(data);
-        }, 1e3);
-      });
+      import_react2 = __toESM(require_react());
+      init_List();
+      import_jsx_runtime2 = __toESM(require_jsx_runtime());
     }
   });
 
@@ -5903,7 +5917,7 @@
           null === (null === workInProgressHook ? index.memoizedState : workInProgressHook.next) && (index = index.alternate, ReactSharedInternals.H = null !== index && null !== index.memoizedState ? HooksDispatcherOnUpdateInDEV : HooksDispatcherOnMountInDEV);
           return thenable;
         }
-        function use(usable) {
+        function use2(usable) {
           if (null !== usable && "object" === typeof usable) {
             if ("function" === typeof usable.then) return useThenable(usable);
             if (usable.$$typeof === REACT_CONTEXT_TYPE) return readContext(usable);
@@ -15673,13 +15687,13 @@
           suspenseInstance = suspenseInstance.nextSibling;
           for (var depth = 0; suspenseInstance; ) {
             if (8 === suspenseInstance.nodeType) {
-              var data2 = suspenseInstance.data;
-              if (data2 === SUSPENSE_END_DATA) {
+              var data = suspenseInstance.data;
+              if (data === SUSPENSE_END_DATA) {
                 if (0 === depth)
                   return getNextHydratable(suspenseInstance.nextSibling);
                 depth--;
               } else
-                data2 !== SUSPENSE_START_DATA && data2 !== SUSPENSE_FALLBACK_START_DATA && data2 !== SUSPENSE_PENDING_START_DATA || depth++;
+                data !== SUSPENSE_START_DATA && data !== SUSPENSE_FALLBACK_START_DATA && data !== SUSPENSE_PENDING_START_DATA || depth++;
             }
             suspenseInstance = suspenseInstance.nextSibling;
           }
@@ -15689,11 +15703,11 @@
           targetInstance = targetInstance.previousSibling;
           for (var depth = 0; targetInstance; ) {
             if (8 === targetInstance.nodeType) {
-              var data2 = targetInstance.data;
-              if (data2 === SUSPENSE_START_DATA || data2 === SUSPENSE_FALLBACK_START_DATA || data2 === SUSPENSE_PENDING_START_DATA) {
+              var data = targetInstance.data;
+              if (data === SUSPENSE_START_DATA || data === SUSPENSE_FALLBACK_START_DATA || data === SUSPENSE_PENDING_START_DATA) {
                 if (0 === depth) return targetInstance;
                 depth--;
-              } else data2 === SUSPENSE_END_DATA && depth++;
+              } else data === SUSPENSE_END_DATA && depth++;
             }
             targetInstance = targetInstance.previousSibling;
           }
@@ -17976,7 +17990,7 @@
         var didWarnAboutUseFormState = /* @__PURE__ */ new Set();
         var renderLanes = 0, currentlyRenderingFiber = null, currentHook = null, workInProgressHook = null, didScheduleRenderPhaseUpdate = false, didScheduleRenderPhaseUpdateDuringThisPass = false, shouldDoubleInvokeUserFnsInHooksDEV = false, localIdCounter = 0, thenableIndexCounter$1 = 0, thenableState$1 = null, globalClientIdCounter = 0, RE_RENDER_LIMIT = 25, currentHookNameInDev = null, hookTypesDev = null, hookTypesUpdateIndexDev = -1, ignorePreviousDependencies = false, ContextOnlyDispatcher = {
           readContext,
-          use,
+          use: use2,
           useCallback: throwInvalidHookError,
           useContext: throwInvalidHookError,
           useEffect: throwInvalidHookError,
@@ -18003,7 +18017,7 @@
           readContext: function(context) {
             return readContext(context);
           },
-          use,
+          use: use2,
           useCallback: function(callback, deps) {
             currentHookNameInDev = "useCallback";
             mountHookTypesDev();
@@ -18134,7 +18148,7 @@
           readContext: function(context) {
             return readContext(context);
           },
-          use,
+          use: use2,
           useCallback: function(callback, deps) {
             currentHookNameInDev = "useCallback";
             updateHookTypesDev();
@@ -18259,7 +18273,7 @@
           readContext: function(context) {
             return readContext(context);
           },
-          use,
+          use: use2,
           useCallback: function(callback, deps) {
             currentHookNameInDev = "useCallback";
             updateHookTypesDev();
@@ -18384,7 +18398,7 @@
           readContext: function(context) {
             return readContext(context);
           },
-          use,
+          use: use2,
           useCallback: function(callback, deps) {
             currentHookNameInDev = "useCallback";
             updateHookTypesDev();
@@ -18512,7 +18526,7 @@
           },
           use: function(usable) {
             warnInvalidHookAccess();
-            return use(usable);
+            return use2(usable);
           },
           useCallback: function(callback, deps) {
             currentHookNameInDev = "useCallback";
@@ -18661,7 +18675,7 @@
           },
           use: function(usable) {
             warnInvalidHookAccess();
-            return use(usable);
+            return use2(usable);
           },
           useCallback: function(callback, deps) {
             currentHookNameInDev = "useCallback";
@@ -18810,7 +18824,7 @@
           },
           use: function(usable) {
             warnInvalidHookAccess();
-            return use(usable);
+            return use2(usable);
           },
           useCallback: function(callback, deps) {
             currentHookNameInDev = "useCallback";
@@ -19615,8 +19629,8 @@
     "src/client.jsx"() {
       init_App();
       var import_client = __toESM(require_client());
-      var import_jsx_runtime2 = __toESM(require_jsx_runtime());
-      (0, import_client.hydrateRoot)(document.getElementById("root"), /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(App, { data: window.data }));
+      var import_jsx_runtime3 = __toESM(require_jsx_runtime());
+      (0, import_client.hydrateRoot)(document.getElementById("root"), /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(App, {}));
     }
   });
   require_client2();
